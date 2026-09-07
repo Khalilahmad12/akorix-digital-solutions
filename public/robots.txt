@@ -1,0 +1,6 @@
+# robots.txt for AKorix Digital Solutions
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://akorix-digital.com/sitemap.xml

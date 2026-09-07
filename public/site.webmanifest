@@ -1,0 +1,31 @@
+{
+  "name": "AKorix Digital Solutions",
+  "short_name": "AKorix Digital",
+  "description": "Digital Product & Web Engineering Agency - Web Development, UI/UX Design, E-Commerce, Mobile Apps, SEO, AI Automation",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0c0a09",
+  "background_color": "#0c0a09",
+  "display": "standalone",
+  "start_url": "/"
+}

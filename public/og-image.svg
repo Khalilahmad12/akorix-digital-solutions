@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="ogBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141210" />
+      <stop offset="60%" stop-color="#0c0a09" />
+      <stop offset="100%" stop-color="#050404" />
+    </linearGradient>
+    <radialGradient id="amberGlow" cx="25%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.18" />
+      <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#ogBg)" />
+  <rect width="1200" height="630" fill="url(#amberGlow)" />
+
+  <!-- Subtle grid lines -->
+  <path d="M0 126 H1200 M0 252 H1200 M0 378 H1200 M0 504 H1200 M240 0 V630 M480 0 V630 M720 0 V630 M960 0 V630" stroke="#292524" stroke-width="1" stroke-opacity="0.25" />
+
+  <!-- Top Brand Tag -->
+  <g transform="translate(100, 90)">
+    <rect width="210" height="36" rx="18" fill="#1c1917" stroke="#38322d" stroke-width="1" />
+    <circle cx="20" cy="18" r="5" fill="#f59e0b" />
+    <text x="34" y="23" fill="#fbbf24" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5">DIGITAL AGENCY</text>
+  </g>
+
+  <!-- Main Logo Box + Brand Name -->
+  <g transform="translate(100, 155)">
+    <!-- Logo Icon Box -->
+    <rect width="84" height="84" rx="20" fill="url(#cardGrad)" stroke="#44403c" stroke-width="2.5" />
+    <g transform="translate(15, 15) scale(2.25)">
+      <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="12" cy="12" r="3.2" fill="#fbbf24"/>
+    </g>
+
+    <!-- Brand Headings -->
+    <text x="110" y="52" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="900" letter-spacing="-1">AKORIX <tspan fill="#f59e0b">DIGITAL</tspan></text>
+    <text x="112" y="80" fill="#a8a29e" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" letter-spacing="3">SOLUTIONS HUB</text>
+  </g>
+
+  <!-- Value Proposition / Main Title -->
+  <text x="100" y="325" fill="#fafaf9" font-family="system-ui, -apple-system, sans-serif" font-size="44" font-weight="800" letter-spacing="-0.5">
+    High-Impact Digital Products &amp; Web Engineering
+  </text>
+  
+  <text x="100" y="375" fill="#a8a29e" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400" line-height="1.5">
+    Custom Web Applications • Mobile Apps • UI/UX Design • E-Commerce • AI Automation
+  </text>
+
+  <!-- Badges row -->
+  <g transform="translate(100, 440)">
+    <!-- Badge 1 -->
+    <rect x="0" y="0" width="180" height="42" rx="8" fill="#1c1917" stroke="#292524" stroke-width="1.5" />
+    <text x="20" y="26" fill="#e7e5e4" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">Web Development</text>
+    
+    <!-- Badge 2 -->
+    <rect x="195" y="0" width="145" height="42" rx="8" fill="#1c1917" stroke="#292524" stroke-width="1.5" />
+    <text x="215" y="26" fill="#e7e5e4" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">UI/UX Design</text>
+
+    <!-- Badge 3 -->
+    <rect x="355" y="0" width="165" height="42" rx="8" fill="#1c1917" stroke="#292524" stroke-width="1.5" />
+    <text x="375" y="26" fill="#e7e5e4" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">E-Commerce</text>
+
+    <!-- Badge 4 -->
+    <rect x="535" y="0" width="185" height="42" rx="8" fill="#1c1917" stroke="#292524" stroke-width="1.5" />
+    <text x="555" y="26" fill="#e7e5e4" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">App Development</text>
+
+    <!-- Badge 5 -->
+    <rect x="735" y="0" width="165" height="42" rx="8" fill="#1c1917" stroke="#292524" stroke-width="1.5" />
+    <text x="755" y="26" fill="#e7e5e4" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">AI Automation</text>
+  </g>
+
+  <!-- Bottom Bar with website and contact -->
+  <line x1="100" y1="535" x2="1100" y2="535" stroke="#292524" stroke-width="1" />
+  <text x="100" y="575" fill="#d6d3d1" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">AKorix Digital Solutions</text>
+  <text x="1100" y="575" text-anchor="end" fill="#f59e0b" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="700">akorix-digital.com</text>
+</svg>
