@@ -13,8 +13,20 @@ export interface PageSEO {
   ogTitle: string;
   ogDescription: string;
   ogImage: string;
+  ogImageUrl: string;
+  ogImageSecureUrl: string;
+  ogImageWidth: string;
+  ogImageHeight: string;
+  ogImageType: string;
+  ogImageAlt: string;
+  ogUrl: string;
   ogType: string;
+  ogSiteName: string;
   twitterCard: 'summary_large_image' | 'summary';
+  twitterTitle: string;
+  twitterDescription: string;
+  twitterImage: string;
+  twitterImageAlt: string;
   breadcrumbs: BreadcrumbItem[];
   schemaType?: string;
   serviceData?: {
@@ -26,12 +38,72 @@ export interface PageSEO {
   };
 }
 
-export const SITE_URL = 'https://akorix-digital.com';
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 export const BRAND_NAME = 'AKorix Digital Solutions';
+export const FALLBACK_PRODUCTION_URL = 'https://ais-dev-mzkr66cz6y3y3g4j5pzpkd-91515516273.asia-southeast1.run.app';
 
-export function getPageSEO(pathname: string): PageSEO {
+export function resolveBaseUrl(customBaseUrl?: string): string {
+  if (customBaseUrl && customBaseUrl.trim() !== '') {
+    return customBaseUrl.trim().replace(/\/$/, '');
+  }
+
+  // 1. In browser runtime: use actual window location origin
+  if (typeof window !== 'undefined' && window.location && window.location.origin) {
+    const origin = window.location.origin;
+    if (!origin.includes('localhost') && !origin.includes('127.0.0.1')) {
+      return origin.replace(/\/$/, '');
+    }
+  }
+
+  // 2. In server runtime: check environment variables injected by platform
+  if (typeof process !== 'undefined' && process.env) {
+    const envUrl = process.env.APP_URL || process.env.SITE_URL || process.env.PUBLIC_URL;
+    if (envUrl && envUrl.trim() !== '') {
+      return envUrl.trim().replace(/\/$/, '');
+    }
+  }
+
+  // 3. Vite client build environment
+  try {
+    // @ts-ignore
+    const viteUrl = import.meta.env?.VITE_APP_URL || import.meta.env?.VITE_SITE_URL;
+    if (viteUrl && viteUrl.trim() !== '') {
+      return viteUrl.trim().replace(/\/$/, '');
+    }
+  } catch (_e) {
+    // Ignore if not in Vite client context
+  }
+
+  return FALLBACK_PRODUCTION_URL;
+}
+
+export const SITE_URL = resolveBaseUrl();
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+
+// Primary naturally integrated brand keywords
+const PRIMARY_KEYWORDS = [
+  'AKorix Digital Solutions',
+  'AKorix Digital Solutions agency',
+  'AKorix web development',
+  'AKorix digital solutions',
+  'digital solutions agency',
+  'web development agency',
+  'website development',
+  'custom web development',
+  'UI/UX design',
+  'e-commerce development',
+  'WordPress development',
+  'Shopify development',
+  'mobile app development',
+  'SEO services',
+  'digital marketing services',
+  'AI automation',
+  'AI agents',
+].join(', ');
+
+export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
+  const baseUrl = resolveBaseUrl(customBaseUrl);
   const cleanPath = pathname.split('?')[0].split('#')[0];
+  const ogImage = `${baseUrl}/og-image.png`;
 
   // 1. Individual Service Pages (/services/:slug)
   if (cleanPath.startsWith('/services/') && cleanPath.length > '/services/'.length) {
@@ -39,20 +111,36 @@ export function getPageSEO(pathname: string): PageSEO {
     const service = getServiceBySlug(slug);
 
     if (service) {
-      const canonical = `${SITE_URL}/services/${service.slug}`;
+      const canonical = `${baseUrl}/services/${service.slug}`;
+      const title = `${service.name} | ${BRAND_NAME}`;
+      const description = `${BRAND_NAME} delivers expert ${service.name.toLowerCase()} solutions, combining high performance, custom engineering, and measurable business growth.`;
+      const keywords = `${service.name}, ${service.name} AKorix Digital Solutions, custom ${service.name.toLowerCase()}, ${service.category} development, digital solutions agency, AKorix web development, ${PRIMARY_KEYWORDS}`;
+
       return {
-        title: `${service.name} Services | ${BRAND_NAME}`,
-        description: `${service.heroDescription || service.shortDesc} Delivered by ${BRAND_NAME} with high performance, clean architecture, and rapid turnaround.`,
-        keywords: `${service.name.toLowerCase()} services, custom ${service.name.toLowerCase()}, ${service.category} development, ${BRAND_NAME.toLowerCase()}, digital solutions`,
+        title,
+        description,
+        keywords,
         canonical,
-        ogTitle: `${service.name} Services | ${BRAND_NAME}`,
-        ogDescription: `${service.shortDesc} Scalable engineering & high-impact digital solutions.`,
-        ogImage: DEFAULT_OG_IMAGE,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
         ogType: 'website',
+        ogSiteName: BRAND_NAME,
         twitterCard: 'summary_large_image',
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
         breadcrumbs: [
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'Services', url: `${SITE_URL}/services` },
+          { name: 'Home', url: `${baseUrl}/` },
+          { name: 'Services', url: `${baseUrl}/services` },
           { name: service.name, url: canonical },
         ],
         schemaType: 'Service',
@@ -69,105 +157,213 @@ export function getPageSEO(pathname: string): PageSEO {
 
   // 2. Main Page Routes
   switch (cleanPath) {
-    case '/about':
-      return {
-        title: `About Us | ${BRAND_NAME} - Our Team & Expertise`,
-        description: `Learn about AKorix Digital Solutions, a modern digital product & web engineering agency driven by technical craftsmanship, user-centric design, and scalable business results.`,
-        keywords: `about AKorix Digital Solutions, digital agency team, web engineering experts, custom digital solutions company, full-stack developers, UI UX agency, software consultancy`,
-        canonical: `${SITE_URL}/about`,
-        ogTitle: `About Us | ${BRAND_NAME} - Digital Product & Web Agency`,
-        ogDescription: `Learn about our multidisciplinary team, engineering values, and our mission to build digital solutions that accelerate business growth.`,
-        ogImage: DEFAULT_OG_IMAGE,
-        ogType: 'website',
-        twitterCard: 'summary_large_image',
-        breadcrumbs: [
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'About Us', url: `${SITE_URL}/about` },
-        ],
-      };
+    case '/about': {
+      const canonical = `${baseUrl}/about`;
+      const title = `About ${BRAND_NAME} | Digital Solutions Agency`;
+      const description = `Learn about AKorix Digital Solutions, a digital solutions agency focused on high-performance web engineering, design systems, and business technology.`;
+      const keywords = `About AKorix Digital Solutions, AKorix Digital Solutions agency, digital solutions agency, web development agency team, software engineering agency, UI/UX design agency, ${PRIMARY_KEYWORDS}`;
 
-    case '/services':
       return {
-        title: `Digital Services & Engineering | ${BRAND_NAME}`,
-        description: `Comprehensive digital services from AKorix Digital Solutions: Web Development, UI/UX Design, E-Commerce, WordPress, Shopify, Mobile Apps, SEO, Digital Marketing, and AI Automation.`,
-        keywords: `digital services, web development agency, mobile app development, UI UX design, e-commerce development, WordPress development, Shopify agency, SEO services, digital marketing, AI automation`,
-        canonical: `${SITE_URL}/services`,
-        ogTitle: `Digital Services & Engineering | ${BRAND_NAME}`,
-        ogDescription: `Explore our end-to-end digital capabilities: Custom Web Apps, Mobile Development, UI/UX Systems, E-Commerce, and AI Automation.`,
-        ogImage: DEFAULT_OG_IMAGE,
+        title,
+        description,
+        keywords,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
         ogType: 'website',
+        ogSiteName: BRAND_NAME,
         twitterCard: 'summary_large_image',
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
         breadcrumbs: [
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'Services', url: `${SITE_URL}/services` },
+          { name: 'Home', url: `${baseUrl}/` },
+          { name: 'About', url: canonical },
         ],
       };
+    }
 
-    case '/projects':
-      return {
-        title: `Projects & Case Studies | ${BRAND_NAME}`,
-        description: `Explore our portfolio of delivered web applications, responsive websites, e-commerce stores, and digital products built by AKorix Digital Solutions for global clients.`,
-        keywords: `web development portfolio, digital agency projects, custom web apps case studies, e-commerce websites portfolio, UI UX showcase, AKorix Digital Solutions work`,
-        canonical: `${SITE_URL}/projects`,
-        ogTitle: `Projects & Case Studies | ${BRAND_NAME}`,
-        ogDescription: `Explore our work across web development, mobile apps, UI/UX design, and digital solutions with measurable business impact.`,
-        ogImage: DEFAULT_OG_IMAGE,
-        ogType: 'website',
-        twitterCard: 'summary_large_image',
-        breadcrumbs: [
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'Projects', url: `${SITE_URL}/projects` },
-        ],
-      };
+    case '/services': {
+      const canonical = `${baseUrl}/services`;
+      const title = `Services | ${BRAND_NAME}`;
+      const description = `Explore core services from AKorix Digital Solutions, including custom web development, mobile applications, UI/UX design, e-commerce, and AI automation.`;
+      const keywords = `services AKorix Digital Solutions, custom web development, UI/UX design, mobile app development, e-commerce development, WordPress development, Shopify development, SEO services, AI automation, ${PRIMARY_KEYWORDS}`;
 
-    case '/process':
       return {
-        title: `Our Process & Methodology | ${BRAND_NAME}`,
-        description: `How AKorix Digital Solutions builds and launches digital products. Discover our transparent 6-step agile process from Discovery & Architecture to Launch and Ongoing Support.`,
-        keywords: `web development process, digital agency workflow, agile development methodology, software delivery process, web launch roadmap, AKorix process`,
-        canonical: `${SITE_URL}/process`,
-        ogTitle: `Our Process & Methodology | ${BRAND_NAME}`,
-        ogDescription: `Transparent, efficient, and agile 6-step delivery framework for launching scalable digital products.`,
-        ogImage: DEFAULT_OG_IMAGE,
+        title,
+        description,
+        keywords,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
         ogType: 'website',
+        ogSiteName: BRAND_NAME,
         twitterCard: 'summary_large_image',
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
         breadcrumbs: [
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'Process', url: `${SITE_URL}/process` },
+          { name: 'Home', url: `${baseUrl}/` },
+          { name: 'Services', url: canonical },
         ],
       };
+    }
 
-    case '/contact':
+    case '/projects': {
+      const canonical = `${baseUrl}/projects`;
+      const title = `Projects | ${BRAND_NAME}`;
+      const description = `Discover recent work and client case studies delivered by AKorix Digital Solutions across modern web, mobile, and digital product platforms.`;
+      const keywords = `projects AKorix Digital Solutions, case studies AKorix digital solutions, web development portfolio, custom web development case studies, e-commerce development portfolio, ${PRIMARY_KEYWORDS}`;
+
       return {
-        title: `Contact Us | ${BRAND_NAME} - Project Consultation`,
-        description: `Get in touch with AKorix Digital Solutions. Request a free consultation, discuss your custom web development or app project, or chat directly via WhatsApp (03461764101).`,
-        keywords: `contact AKorix Digital Solutions, web development consultation, hire web developers, digital agency inquiry, WhatsApp consultation, start a digital project`,
-        canonical: `${SITE_URL}/contact`,
-        ogTitle: `Contact Us | ${BRAND_NAME} - Project Consultation`,
-        ogDescription: `Start your digital project with AKorix Digital Solutions. Inquire online or message us directly on WhatsApp for an immediate consultation.`,
-        ogImage: DEFAULT_OG_IMAGE,
+        title,
+        description,
+        keywords,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
         ogType: 'website',
+        ogSiteName: BRAND_NAME,
         twitterCard: 'summary_large_image',
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
         breadcrumbs: [
-          { name: 'Home', url: `${SITE_URL}/` },
-          { name: 'Contact Us', url: `${SITE_URL}/contact` },
+          { name: 'Home', url: `${baseUrl}/` },
+          { name: 'Projects', url: canonical },
         ],
       };
+    }
+
+    case '/process': {
+      const canonical = `${baseUrl}/process`;
+      const title = `Our Process | ${BRAND_NAME}`;
+      const description = `Learn how AKorix Digital Solutions plans, designs, tests, and deploys high-quality digital solutions with a transparent agile delivery process.`;
+      const keywords = `process AKorix Digital Solutions, agile web development process, digital solutions delivery workflow, software engineering methodology, ${PRIMARY_KEYWORDS}`;
+
+      return {
+        title,
+        description,
+        keywords,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
+        ogType: 'website',
+        ogSiteName: BRAND_NAME,
+        twitterCard: 'summary_large_image',
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
+        breadcrumbs: [
+          { name: 'Home', url: `${baseUrl}/` },
+          { name: 'Process', url: canonical },
+        ],
+      };
+    }
+
+    case '/contact': {
+      const canonical = `${baseUrl}/contact`;
+      const title = `Contact ${BRAND_NAME} | Let's Build Something Great`;
+      const description = `Connect with AKorix Digital Solutions to discuss your project, request a proposal, or schedule a consultation with our digital solutions team.`;
+      const keywords = `contact AKorix Digital Solutions, hire AKorix web development, digital solutions agency consultation, custom web development quote, start a project, ${PRIMARY_KEYWORDS}`;
+
+      return {
+        title,
+        description,
+        keywords,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
+        ogType: 'website',
+        ogSiteName: BRAND_NAME,
+        twitterCard: 'summary_large_image',
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
+        breadcrumbs: [
+          { name: 'Home', url: `${baseUrl}/` },
+          { name: 'Contact', url: canonical },
+        ],
+      };
+    }
 
     // Default: Home Page ('/' or any unmatched path)
     case '/':
-    default:
+    default: {
+      const canonical = `${baseUrl}/`;
+      const title = `${BRAND_NAME} | Modern Digital Solutions & Web Development`;
+      const description = `AKorix Digital Solutions provides modern web development, UI/UX, e-commerce, app development, SEO, digital marketing, and AI automation solutions.`;
+      const keywords = PRIMARY_KEYWORDS;
+
       return {
-        title: `${BRAND_NAME} | Web Development & Digital Solutions Agency`,
-        description: `AKorix Digital Solutions is a premier digital agency building high-performance web applications, mobile apps, UI/UX designs, e-commerce stores, and AI automation solutions for growing businesses worldwide.`,
-        keywords: `digital solutions, digital solutions agency, web development agency, website development, custom web development, web design and development, UI UX design, e-commerce development, WordPress development, Shopify development, mobile app development, SEO services, digital marketing services, graphics design, video editing, AI automation, AI agents, full-stack development`,
-        canonical: `${SITE_URL}/`,
-        ogTitle: `${BRAND_NAME} | Web Development & Digital Solutions Agency`,
-        ogDescription: `High-impact digital products and web engineering. We build fast, scalable web apps, mobile solutions, intuitive UI/UX, e-commerce stores, and AI automation.`,
-        ogImage: DEFAULT_OG_IMAGE,
+        title,
+        description,
+        keywords,
+        canonical,
+        ogTitle: title,
+        ogDescription: description,
+        ogImage,
+        ogImageUrl: ogImage,
+        ogImageSecureUrl: ogImage,
+        ogImageWidth: '1200',
+        ogImageHeight: '630',
+        ogImageType: 'image/png',
+        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogUrl: canonical,
         ogType: 'website',
+        ogSiteName: BRAND_NAME,
         twitterCard: 'summary_large_image',
-        breadcrumbs: [{ name: 'Home', url: `${SITE_URL}/` }],
+        twitterTitle: title,
+        twitterDescription: description,
+        twitterImage: ogImage,
+        twitterImageAlt: `${title} - ${BRAND_NAME}`,
+        breadcrumbs: [{ name: 'Home', url: `${baseUrl}/` }],
       };
+    }
   }
 }

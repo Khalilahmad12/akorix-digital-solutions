@@ -47,24 +47,26 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath }) => {
     setCanonicalTag(seo.canonical);
 
     // 4. Open Graph Meta Tags
-    setMetaTag('og:site_name', BRAND_NAME, true);
+    setMetaTag('og:site_name', seo.ogSiteName, true);
     setMetaTag('og:locale', 'en_US', true);
     setMetaTag('og:type', seo.ogType, true);
     setMetaTag('og:title', seo.ogTitle, true);
     setMetaTag('og:description', seo.ogDescription, true);
-    setMetaTag('og:url', seo.canonical, true);
+    setMetaTag('og:url', seo.ogUrl, true);
     setMetaTag('og:image', seo.ogImage, true);
-    setMetaTag('og:image:secure_url', seo.ogImage, true);
-    setMetaTag('og:image:width', '1200', true);
-    setMetaTag('og:image:height', '630', true);
-    setMetaTag('og:image:alt', `${seo.title} - ${BRAND_NAME}`, true);
+    setMetaTag('og:image:url', seo.ogImageUrl, true);
+    setMetaTag('og:image:secure_url', seo.ogImageSecureUrl, true);
+    setMetaTag('og:image:type', seo.ogImageType, true);
+    setMetaTag('og:image:width', seo.ogImageWidth, true);
+    setMetaTag('og:image:height', seo.ogImageHeight, true);
+    setMetaTag('og:image:alt', seo.ogImageAlt, true);
 
     // 5. Twitter / X Meta Tags
     setMetaTag('twitter:card', seo.twitterCard);
-    setMetaTag('twitter:title', seo.ogTitle);
-    setMetaTag('twitter:description', seo.ogDescription);
-    setMetaTag('twitter:image', seo.ogImage);
-    setMetaTag('twitter:image:alt', `${seo.title} - ${BRAND_NAME}`);
+    setMetaTag('twitter:title', seo.twitterTitle);
+    setMetaTag('twitter:description', seo.twitterDescription);
+    setMetaTag('twitter:image', seo.twitterImage);
+    setMetaTag('twitter:image:alt', seo.twitterImageAlt);
 
     // 6. JSON-LD Structured Data
     const graphData: any[] = [
