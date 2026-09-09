@@ -1,48 +1,58 @@
 import { ProjectItem, ProjectCaseStudy } from '../types';
+import projectIMG from '../assets/images/project-1.jpeg'
+import projectIMGtwo from '../assets/images/project-2.png'
+import projectIMGthree from '../assets/images/project-3.png'
+import projectIMGfoure from '../assets/images/project-4.jpeg'
+
+
 
 export const SHOWCASE_PROJECTS: ProjectItem[] = [
   {
     id: 'project-1',
-    title: 'Aura Cloud SaaS Platform',
+    title: 'RestFast Fast Food Website',
     category: 'Web Development',
-    description: 'Enterprise cloud management dashboard featuring real-time telemetry and sub-second page performance.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+    description: 'Modern fast-food ordering website featuring a responsive menu, smooth navigation, and a seamless online food ordering experience.',
+    image: projectIMG,
     services: ['Custom Web App', 'API Architecture', 'Performance Optimization'],
     technologies: ['React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'PostgreSQL'],
-    projectUrl: 'https://example.com/aura-cloud',
+    projectUrl: 'https://restfast-react.vercel.app',
     isFeatured: true,
   },
+
   {
     id: 'project-2',
-    title: 'Nova Storefront E-Commerce',
-    category: 'E-Commerce',
-    description: 'High-converting custom store with headless checkout, dynamic bundle builders, and Stripe integration.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+    title: 'Ayesha Personal Portfolio Website',
+    category: 'Web Development',
+    description: 'Modern personal portfolio website with elegant design, responsive layouts, smooth navigation, and a professional showcase experience.',
+    image: projectIMGtwo,
     services: ['E-Commerce Development', 'Payment Gateways', 'Conversion Design'],
     technologies: ['Shopify Plus', 'Next.js', 'Stripe', 'Tailwind CSS'],
-    projectUrl: 'https://example.com/nova-storefront',
+    projectUrl: 'https://ayesha-portfoilo.vercel.app/',
     isFeatured: true,
   },
+
   {
     id: 'project-3',
-    title: 'Lumina Telehealth App',
+    title: 'Zeenog Global Solution Website',
     category: 'Apps',
-    description: 'Cross-platform iOS and Android medical consultation application with encrypted video and biometric login.',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80',
+    description: 'Professional business website featuring modern design, responsive layouts, clear service presentation, and smooth user navigation.',
+    image: projectIMGthree,
     services: ['Mobile App Development', 'Telehealth API', 'Security & HIPAA'],
     technologies: ['React Native', 'TypeScript', 'WebRTC', 'AWS'],
-    projectUrl: 'https://example.com/lumina-app',
+    projectUrl: 'https://zeenogloblesolution.com/',
   },
+
   {
     id: 'project-4',
-    title: 'Verve Studio Design System',
+    title: 'Bingle Mobile App',
     category: 'UI/UX',
-    description: 'Scalable design token architecture, interactive Figma prototypes, and high-conversion design library.',
-    image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=80',
+    description: 'Modern mobile app website featuring responsive design, clear app details, intuitive navigation, and engaging user experience.',
+    image: projectIMGfoure,
     services: ['UI/UX Design', 'Design Systems', 'Interactive Prototyping'],
     technologies: ['Figma', 'Storybook', 'Tailwind CSS', 'Design Tokens'],
-    projectUrl: 'https://example.com/verve-design',
+    projectUrl: 'https://bingle-moblie.vercel.app/',
   },
+
   {
     id: 'project-5',
     title: 'Apex Editorial & Media Hub',
