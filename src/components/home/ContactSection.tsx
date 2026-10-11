@@ -46,6 +46,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (initialMessage) {
@@ -78,15 +79,46 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    setSubmitError(null);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: 'ea7d3106-63e3-43cf-a66e-78770dda80e7',
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          service: formData.service,
+          message: formData.message.trim(),
+          subject: `New Project Inquiry from ${formData.name.trim()} - AKorix Digital Solutions`,
+          from_name: 'AKorix Digital Solutions Website',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setSubmitError(null);
+      } else {
+        setSubmitError(data.message || 'Unable to submit your message. Please try again or reach out directly.');
+      }
+    } catch {
+      setSubmitError('Unable to connect to the server. Please check your network connection and try again.');
+    } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
-    }, 600);
+    }
   };
 
   const handleReset = () => {
@@ -98,6 +130,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       message: '',
     });
     setErrors({});
+    setSubmitError(null);
     setSubmitted(false);
   };
 
@@ -260,6 +293,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <p className="text-[11px] text-rose-600 font-medium">{errors.message}</p>
             )}
           </div>
+
+          {/* Submission Error Banner */}
+          {submitError && (
+            <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-start gap-2.5">
+              <span className="shrink-0 font-bold">✕</span>
+              <p className="leading-relaxed">{submitError}</p>
+            </div>
+          )}
 
           {/* Submit Button */}
           <button
