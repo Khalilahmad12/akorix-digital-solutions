@@ -48,7 +48,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenContact }) => {
               >
                 <div>
                   {/* Image Container (+15px height -> 255px) */}
-                  <div className="relative h-[255px] w-full bg-stone-100 overflow-hidden border-b border-stone-100">
+                  <div className="relative h-[380px] md:h-[255px] w-full bg-stone-100 overflow-hidden border-b border-stone-100">
                     {!hasImgError ? (
                       <img
                         src={member.avatar}
