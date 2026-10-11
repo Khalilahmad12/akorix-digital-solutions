@@ -140,8 +140,9 @@ export const ProjectsPreview: React.FC<ProjectsPreviewProps> = ({ onOpenContact,
                         <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
                           <img
                             src={project.image}
-                            alt={project.title}
+                            alt={`${project.title} - ${project.category} case study by AKorix Digital Solutions`}
                             referrerPolicy="no-referrer"
+                            loading="lazy"
                             className="w-full h-full object-cover"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent opacity-60" />
@@ -233,8 +234,9 @@ export const ProjectsPreview: React.FC<ProjectsPreviewProps> = ({ onOpenContact,
                 <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={`${project.title} - ${project.category} case study by AKorix Digital Solutions`}
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent opacity-60" />
@@ -284,13 +286,17 @@ export const ProjectsPreview: React.FC<ProjectsPreviewProps> = ({ onOpenContact,
 
         {/* View More Button */}
         <div className={`mt-8 sm:mt-10 flex justify-center reveal-fade-up ${isVisible ? 'revealed' : ''}`} style={{ transitionDelay: '200ms' }}>
-          <button
-            onClick={handleViewMore}
+          <a
+            href="/projects"
+            onClick={(e) => {
+              e.preventDefault();
+              handleViewMore();
+            }}
             className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold text-xs sm:text-sm uppercase tracking-wider shadow-sm hover:shadow-md transition-all flex items-center gap-2 group cursor-pointer"
           >
             <span>View More Projects</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </button>
+          </a>
         </div>
 
       </div>

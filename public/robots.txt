@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://akorix-digital.com/sitemap.xml
+Sitemap: https://akorixdigitalsolutions.com/sitemap.xml

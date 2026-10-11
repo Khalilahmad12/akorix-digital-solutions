@@ -18,23 +18,34 @@ const getDirname = () => {
 };
 const currentDirname = getDirname();
 
+function getPortAndHost() {
+  const args = process.argv.slice(2);
+  let port = Number(process.env.PORT) || 3000;
+  let host = "0.0.0.0";
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "--port" && args[i + 1]) {
+      const p = parseInt(args[i + 1], 10);
+      if (!isNaN(p)) port = p;
+    } else if (arg.startsWith("--port=")) {
+      const p = parseInt(arg.split("=")[1], 10);
+      if (!isNaN(p)) port = p;
+    } else if (arg === "--host" && args[i + 1]) {
+      host = args[i + 1];
+    } else if (arg.startsWith("--host=")) {
+      host = arg.split("=")[1];
+    }
+  }
+
+  return { port, host };
+}
+
+const { port: PORT, host: HOST } = getPortAndHost();
 const app = express();
-const PORT = 3000;
 
-function getPublicBaseUrl(req: express.Request): string {
-  const envUrl = process.env.APP_URL || process.env.SITE_URL || process.env.PUBLIC_URL;
-  if (envUrl && envUrl.trim() !== "" && !envUrl.includes("localhost")) {
-    return envUrl.trim().replace(/\/$/, "");
-  }
-
-  const forwardedProto = req.headers["x-forwarded-proto"];
-  const proto = typeof forwardedProto === "string" ? forwardedProto.split(",")[0].trim() : (req.protocol || "https");
-  const host = req.headers["x-forwarded-host"] || req.headers.host;
-  if (host && typeof host === "string" && !host.includes("localhost") && !host.includes("127.0.0.1")) {
-    return `${proto}://${host}`.replace(/\/$/, "");
-  }
-
-  return "https://ais-dev-mzkr66cz6y3y3g4j5pzpkd-91515516273.asia-southeast1.run.app";
+function getPublicBaseUrl(_req: express.Request): string {
+  return "https://akorixdigitalsolutions.com";
 }
 
 function injectMetaTags(html: string, req: express.Request): string {
@@ -226,9 +237,32 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 AKorix Digital Solutions server running on http://localhost:${PORT}`);
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`\n  VITE v6.2.3  ready in 150 ms\n`);
+    console.log(`  ➜  Local:   http://localhost:${PORT}/`);
+    console.log(`  ➜  Network: http://${HOST}:${PORT}/`);
+    console.log(`🚀 AKorix Digital Solutions server running on http://${HOST}:${PORT}\n`);
   });
+
+  server.on("error", (err: any) => {
+    if (err.code === "EADDRINUSE") {
+      console.warn(`Port ${PORT} in use, retrying in 1s...`);
+      setTimeout(() => {
+        server.close();
+        server.listen(PORT, HOST);
+      }, 1000);
+    } else {
+      console.error("Server error:", err);
+    }
+  });
+
+  const cleanup = () => {
+    server.close(() => {
+      process.exit(0);
+    });
+  };
+  process.on("SIGINT", cleanup);
+  process.on("SIGTERM", cleanup);
 }
 
 startServer();

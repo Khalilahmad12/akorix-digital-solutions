@@ -37,7 +37,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         <div className="relative aspect-16/9 w-full bg-stone-100 overflow-hidden">
           <img
             src={project.image}
-            alt={project.title}
+            alt={`${project.title} - ${project.category} case study by AKorix Digital Solutions`}
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />

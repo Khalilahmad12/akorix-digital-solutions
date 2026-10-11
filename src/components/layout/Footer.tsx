@@ -131,7 +131,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
           <div className="space-y-4">
             {/* Logo */}
             <a 
-              href="#hero" 
+              href="/" 
               onClick={(e) => { e.preventDefault(); handleLinkClick('hero'); }}
               className="inline-flex items-center group focus:outline-none"
               aria-label="AKorix Digital"
@@ -217,7 +217,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact, onNavigate }) => 
               {companyLinks.map((link) => (
                 <li key={link.label}>
                   <a
-                    href={link.id === 'about' ? '/about' : link.id === 'projects' ? '/projects' : link.id === 'process' ? '/process' : link.id === 'contact' ? '/contact' : `#${link.id}`}
+                    href={
+                      link.id === 'about' ? '/about' : 
+                      link.id === 'projects' ? '/projects' : 
+                      link.id === 'services' ? '/services' : 
+                      link.id === 'process' ? '/process' : 
+                      link.id === 'contact' ? '/contact' : '/'
+                    }
                     onClick={(e) => {
                       e.preventDefault();
                       handleLinkClick(link.id);

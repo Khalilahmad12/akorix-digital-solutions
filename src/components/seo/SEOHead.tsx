@@ -94,6 +94,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath }) => {
         ],
         sameAs: [
           'https://www.linkedin.com/company/akorix-digital-solutions',
+          'https://www.facebook.com/akorixdigitalsolutions',
           'https://www.facebook.com/share/1D2aL18vHY/',
           'https://www.instagram.com/akorixdigitalsolutions/',
         ],
@@ -104,7 +105,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPath }) => {
         '@id': `${SITE_URL}/#website`,
         url: SITE_URL,
         name: BRAND_NAME,
-        description: 'Digital Product & Web Engineering Agency',
+        description: 'Digital Solutions Agency - Custom Web Development, UI/UX Design, E-Commerce, SEO, AI Automation',
         publisher: {
           '@id': `${SITE_URL}/#organization`,
         },

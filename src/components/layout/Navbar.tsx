@@ -270,7 +270,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Logo */}
           <a 
-            href="#hero" 
+            href="/" 
             onClick={(e) => { e.preventDefault(); handleNavClick('hero'); }}
             className="flex items-center group shrink-0 focus:outline-none py-1"
             aria-label="AKorix Digital - Home"
@@ -298,7 +298,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             
             {/* Home */}
             <a
-              href="#hero"
+              href="/" 
               onClick={(e) => { e.preventDefault(); handleNavClick('hero'); }}
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                 currentPath === '/' && activeSection === 'hero'
@@ -437,9 +437,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Contact */}
             <a
-              href="https://wa.me/03461764101"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contact"
+              onClick={(e) => { e.preventDefault(); handleNavClick('contact'); }}
               className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                 currentPath === '/contact' || (currentPath === '/' && activeSection === 'contact')
                   ? 'text-amber-800 font-bold bg-amber-50'
@@ -581,11 +580,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Contact */}
             <a
-              href="https://wa.me/03461764101"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors text-stone-800 hover:bg-stone-50"
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                handleNavClick('contact');
+              }}
+              className={`flex items-center justify-between w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                currentPath === '/contact' || (currentPath === '/' && activeSection === 'contact') ? 'bg-amber-50 text-amber-900 font-bold' : 'text-stone-800 hover:bg-stone-50'
+              }`}
             >
               <span>Contact</span>
               <ChevronRight className="w-4 h-4 text-stone-400" />

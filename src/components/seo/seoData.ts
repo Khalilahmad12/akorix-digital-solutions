@@ -39,66 +39,99 @@ export interface PageSEO {
 }
 
 export const BRAND_NAME = 'AKorix Digital Solutions';
-export const FALLBACK_PRODUCTION_URL = 'https://ais-dev-mzkr66cz6y3y3g4j5pzpkd-91515516273.asia-southeast1.run.app';
+export const OFFICIAL_PRODUCTION_URL = 'https://akorixdigitalsolutions.com';
 
 export function resolveBaseUrl(customBaseUrl?: string): string {
   if (customBaseUrl && customBaseUrl.trim() !== '') {
     return customBaseUrl.trim().replace(/\/$/, '');
   }
 
-  // 1. In browser runtime: use actual window location origin
-  if (typeof window !== 'undefined' && window.location && window.location.origin) {
-    const origin = window.location.origin;
-    if (!origin.includes('localhost') && !origin.includes('127.0.0.1')) {
-      return origin.replace(/\/$/, '');
-    }
-  }
-
-  // 2. In server runtime: check environment variables injected by platform
-  if (typeof process !== 'undefined' && process.env) {
-    const envUrl = process.env.APP_URL || process.env.SITE_URL || process.env.PUBLIC_URL;
-    if (envUrl && envUrl.trim() !== '') {
-      return envUrl.trim().replace(/\/$/, '');
-    }
-  }
-
-  // 3. Vite client build environment
-  try {
-    // @ts-ignore
-    const viteUrl = import.meta.env?.VITE_APP_URL || import.meta.env?.VITE_SITE_URL;
-    if (viteUrl && viteUrl.trim() !== '') {
-      return viteUrl.trim().replace(/\/$/, '');
-    }
-  } catch (_e) {
-    // Ignore if not in Vite client context
-  }
-
-  return FALLBACK_PRODUCTION_URL;
+  // Always use the official canonical production URL for canonical, metadata, and schema tags
+  return OFFICIAL_PRODUCTION_URL;
 }
 
-export const SITE_URL = resolveBaseUrl();
+export const SITE_URL = OFFICIAL_PRODUCTION_URL;
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
-// Primary naturally integrated brand keywords
-const PRIMARY_KEYWORDS = [
+// Primary keyword dictionary
+const CORE_BRAND_KEYWORDS = [
   'AKorix Digital Solutions',
-  'AKorix Digital Solutions agency',
-  'AKorix web development',
-  'AKorix digital solutions',
-  'digital solutions agency',
-  'web development agency',
-  'website development',
-  'custom web development',
-  'UI/UX design',
-  'e-commerce development',
-  'WordPress development',
-  'Shopify development',
-  'mobile app development',
-  'SEO services',
-  'digital marketing services',
-  'AI automation',
-  'AI agents',
+  'Digital Solutions Agency',
+  'Web Development Agency',
+  'Custom Website Development',
+  'UI/UX Design',
+  'E-Commerce Development',
+  'WordPress Development',
+  'Shopify Development',
+  'Mobile App Development',
+  'SEO Services',
+  'Digital Marketing Services',
+  'AI Automation',
+  'AI Agents',
 ].join(', ');
+
+// Tailored service metadata mapping
+const SERVICE_SEO_MAP: Record<string, {
+  title: string;
+  description: string;
+  keywords: string;
+}> = {
+  'web-development': {
+    title: `Web Development Services | ${BRAND_NAME}`,
+    description: 'Custom full-stack web development services built with React, Next.js, and modern tech. High speed, robust security, and SEO optimization for your business.',
+    keywords: `Professional Web Development Services, Custom Website Development, Full-Stack Web Development, Responsive Website Development, React Web Development, Next.js Development, Web Development Agency, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'ui-ux': {
+    title: `UI/UX Design Services | ${BRAND_NAME}`,
+    description: 'Human-centered UI/UX design services, interactive prototypes, and scalable Figma design systems crafted to elevate user retention and maximize conversions.',
+    keywords: `UI/UX Design Services, Website UI/UX Design, User Interface Design, User Experience Design, Figma Design Systems, Interactive Prototyping, Usability Testing, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'ecommerce': {
+    title: `E-Commerce Website Development | ${BRAND_NAME}`,
+    description: 'Scalable e-commerce website development with secure checkout, payment gateways, and high-converting storefronts engineered to maximize your online sales.',
+    keywords: `E-Commerce Website Development, Online Store Development, Custom E-Commerce Solutions, Payment Gateway Integration, WooCommerce Development, High Converting Storefronts, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'wordpress': {
+    title: `WordPress Website Development | ${BRAND_NAME}`,
+    description: 'Custom WordPress website development, responsive theme designs, and secure CMS solutions tailored for speed, search visibility, and seamless editing.',
+    keywords: `WordPress Website Development, Custom WordPress Development, WordPress Website Design, WordPress Speed Optimization, Custom WordPress Theme, Secure CMS, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'shopify': {
+    title: `Shopify Development Services | ${BRAND_NAME}`,
+    description: 'Professional Shopify development services, custom theme builds, and app integrations engineered for lightning-fast speeds and high e-commerce conversion.',
+    keywords: `Shopify Development Services, Shopify Store Development, Custom Shopify Theme, Shopify App Integration, Shopify E-Commerce Agency, High Speed Shopify, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'app-development': {
+    title: `Mobile App Development Services | ${BRAND_NAME}`,
+    description: 'Custom iOS and Android mobile app development with React Native and modern backends. High-performance, intuitive user interfaces built for scale.',
+    keywords: `Mobile App Development Services, iOS App Development, Android App Development, Cross-Platform App Development, React Native Apps, Scalable Mobile Backends, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'seo': {
+    title: `Search Engine Optimization Services | AKorix Digital`,
+    description: 'Results-driven technical SEO services, keyword research, on-page optimization, and audit strategies designed to grow organic search rankings and traffic.',
+    keywords: `Search Engine Optimization Services, Technical SEO Services, On-Page SEO Optimization, Keyword Research, Search Ranking Strategy, Organic Traffic Growth, SEO Audit, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'digital-marketing': {
+    title: `Digital Marketing Services | ${BRAND_NAME}`,
+    description: 'Strategic digital marketing services including paid ads, social media marketing, content strategies, and analytics to generate qualified leads and sales.',
+    keywords: `Digital Marketing Services, Social Media Marketing, PPC Campaign Management, Performance Marketing, Lead Generation Services, Brand Growth Strategy, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'graphics-design': {
+    title: `Graphic Design Services | ${BRAND_NAME}`,
+    description: 'Creative graphic design services, visual brand identity systems, marketing collateral, and digital assets tailored to make your business stand out.',
+    keywords: `Graphic Design Services, Visual Brand Identity, Logo Design, Marketing Collateral Design, Digital Graphics, Vector Assets, Brand Style Guides, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'video-editing': {
+    title: `Video Editing Services | ${BRAND_NAME}`,
+    description: 'Professional video editing services, commercial motion graphics, and social media video ads engineered to engage audiences and boost brand awareness.',
+    keywords: `Video Editing Services, Commercial Motion Graphics, Social Media Video Ads, Promotional Video Production, YouTube Video Editing, Video Post Production, ${CORE_BRAND_KEYWORDS}`,
+  },
+  'ai-automation': {
+    title: `AI Automation & AI Agents | ${BRAND_NAME}`,
+    description: 'Intelligent AI automation services and custom AI agent development designed to streamline workflows, reduce manual overhead, and accelerate business growth.',
+    keywords: `AI Automation Services, AI Agent Development, Intelligent Workflow Automation, Business AI Solutions, Chatbot Development, LLM Integration, Automated Workflows, ${CORE_BRAND_KEYWORDS}`,
+  },
+};
 
 export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
   const baseUrl = resolveBaseUrl(customBaseUrl);
@@ -107,37 +140,39 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
 
   // 1. Individual Service Pages (/services/:slug)
   if (cleanPath.startsWith('/services/') && cleanPath.length > '/services/'.length) {
-    const slug = cleanPath.replace('/services/', '');
+    const slug = cleanPath.replace('/services/', '').replace(/\/$/, '');
     const service = getServiceBySlug(slug);
 
     if (service) {
       const canonical = `${baseUrl}/services/${service.slug}`;
-      const title = `${service.name} | ${BRAND_NAME}`;
-      const description = `${BRAND_NAME} delivers expert ${service.name.toLowerCase()} solutions, combining high performance, custom engineering, and measurable business growth.`;
-      const keywords = `${service.name}, ${service.name} AKorix Digital Solutions, custom ${service.name.toLowerCase()}, ${service.category} development, digital solutions agency, AKorix web development, ${PRIMARY_KEYWORDS}`;
+      const tailored = SERVICE_SEO_MAP[service.slug] || {
+        title: `${service.name} Services | ${BRAND_NAME}`,
+        description: `${BRAND_NAME} delivers expert ${service.name.toLowerCase()} solutions, combining high performance, custom engineering, and measurable business growth.`,
+        keywords: `${service.name}, ${service.name} AKorix Digital Solutions, custom ${service.name.toLowerCase()}, ${CORE_BRAND_KEYWORDS}`,
+      };
 
       return {
-        title,
-        description,
-        keywords,
+        title: tailored.title,
+        description: tailored.description,
+        keywords: tailored.keywords,
         canonical,
-        ogTitle: title,
-        ogDescription: description,
+        ogTitle: tailored.title,
+        ogDescription: tailored.description,
         ogImage,
         ogImageUrl: ogImage,
         ogImageSecureUrl: ogImage,
         ogImageWidth: '1200',
         ogImageHeight: '630',
         ogImageType: 'image/png',
-        ogImageAlt: `${title} - ${BRAND_NAME}`,
+        ogImageAlt: `${tailored.title} - ${BRAND_NAME}`,
         ogUrl: canonical,
         ogType: 'website',
         ogSiteName: BRAND_NAME,
         twitterCard: 'summary_large_image',
-        twitterTitle: title,
-        twitterDescription: description,
+        twitterTitle: tailored.title,
+        twitterDescription: tailored.description,
         twitterImage: ogImage,
-        twitterImageAlt: `${title} - ${BRAND_NAME}`,
+        twitterImageAlt: `${tailored.title} - ${BRAND_NAME}`,
         breadcrumbs: [
           { name: 'Home', url: `${baseUrl}/` },
           { name: 'Services', url: `${baseUrl}/services` },
@@ -159,9 +194,9 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
   switch (cleanPath) {
     case '/about': {
       const canonical = `${baseUrl}/about`;
-      const title = `About ${BRAND_NAME} | Digital Solutions Agency`;
-      const description = `Learn about AKorix Digital Solutions, a digital solutions agency focused on high-performance web engineering, design systems, and business technology.`;
-      const keywords = `About AKorix Digital Solutions, AKorix Digital Solutions agency, digital solutions agency, web development agency team, software engineering agency, UI/UX design agency, ${PRIMARY_KEYWORDS}`;
+      const title = `About AKorix Digital Solutions | Digital Solutions Agency`;
+      const description = `Learn about AKorix Digital Solutions, a modern digital agency specializing in custom web engineering, UI/UX design, e-commerce, and scalable business tech.`;
+      const keywords = `About AKorix Digital Solutions, Digital Solutions Agency Team, Web Development Agency, Software Engineering Company, Digital Product Specialists, Full-Stack Developers, ${CORE_BRAND_KEYWORDS}`;
 
       return {
         title,
@@ -194,9 +229,9 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
 
     case '/services': {
       const canonical = `${baseUrl}/services`;
-      const title = `Services | ${BRAND_NAME}`;
-      const description = `Explore core services from AKorix Digital Solutions, including custom web development, mobile applications, UI/UX design, e-commerce, and AI automation.`;
-      const keywords = `services AKorix Digital Solutions, custom web development, UI/UX design, mobile app development, e-commerce development, WordPress development, Shopify development, SEO services, AI automation, ${PRIMARY_KEYWORDS}`;
+      const title = `Professional Digital Services | ${BRAND_NAME}`;
+      const description = `Explore expert digital services from AKorix Digital Solutions: custom web development, UI/UX design, WordPress, Shopify, mobile apps, SEO, and AI automation.`;
+      const keywords = `Digital Services, Web Development Services, E-Commerce Development, Shopify Services, WordPress Development, SEO Services, UI/UX Design, AI Automation, ${CORE_BRAND_KEYWORDS}`;
 
       return {
         title,
@@ -229,9 +264,9 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
 
     case '/projects': {
       const canonical = `${baseUrl}/projects`;
-      const title = `Projects | ${BRAND_NAME}`;
-      const description = `Discover recent work and client case studies delivered by AKorix Digital Solutions across modern web, mobile, and digital product platforms.`;
-      const keywords = `projects AKorix Digital Solutions, case studies AKorix digital solutions, web development portfolio, custom web development case studies, e-commerce development portfolio, ${PRIMARY_KEYWORDS}`;
+      const title = `Projects & Case Studies | ${BRAND_NAME}`;
+      const description = `Explore our portfolio of web applications, e-commerce stores, and digital solutions delivered for growing businesses worldwide. View our latest case studies.`;
+      const keywords = `AKorix Projects, Digital Portfolio, Web Development Case Studies, E-Commerce Portfolio, Client Success Stories, Full-Stack Portfolio, ${CORE_BRAND_KEYWORDS}`;
 
       return {
         title,
@@ -264,9 +299,9 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
 
     case '/process': {
       const canonical = `${baseUrl}/process`;
-      const title = `Our Process | ${BRAND_NAME}`;
-      const description = `Learn how AKorix Digital Solutions plans, designs, tests, and deploys high-quality digital solutions with a transparent agile delivery process.`;
-      const keywords = `process AKorix Digital Solutions, agile web development process, digital solutions delivery workflow, software engineering methodology, ${PRIMARY_KEYWORDS}`;
+      const title = `Our Development Process | ${BRAND_NAME}`;
+      const description = `Discover the agile delivery process at AKorix Digital Solutions: transparent discovery, UX design, robust engineering, QA testing, and seamless deployment.`;
+      const keywords = `Development Process, Agile Web Development Workflow, Software Engineering Methodology, Quality Assurance, Transparent Project Delivery, ${CORE_BRAND_KEYWORDS}`;
 
       return {
         title,
@@ -299,9 +334,9 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
 
     case '/contact': {
       const canonical = `${baseUrl}/contact`;
-      const title = `Contact ${BRAND_NAME} | Let's Build Something Great`;
-      const description = `Connect with AKorix Digital Solutions to discuss your project, request a proposal, or schedule a consultation with our digital solutions team.`;
-      const keywords = `contact AKorix Digital Solutions, hire AKorix web development, digital solutions agency consultation, custom web development quote, start a project, ${PRIMARY_KEYWORDS}`;
+      const title = `Contact Us & Get a Quote | ${BRAND_NAME}`;
+      const description = `Get in touch with AKorix Digital Solutions for a free consultation or custom project estimate. Let's discuss your web, design, or digital marketing goals.`;
+      const keywords = `Contact AKorix Digital Solutions, Hire Web Developers, Free Project Consultation, Custom Website Quote, Digital Agency Contact, Start a Project, ${CORE_BRAND_KEYWORDS}`;
 
       return {
         title,
@@ -336,9 +371,9 @@ export function getPageSEO(pathname: string, customBaseUrl?: string): PageSEO {
     case '/':
     default: {
       const canonical = `${baseUrl}/`;
-      const title = `${BRAND_NAME} | Modern Digital Solutions & Web Development`;
-      const description = `AKorix Digital Solutions provides modern web development, UI/UX, e-commerce, app development, SEO, digital marketing, and AI automation solutions.`;
-      const keywords = PRIMARY_KEYWORDS;
+      const title = `${BRAND_NAME} | Digital Solutions & Web Agency`;
+      const description = `AKorix Digital Solutions builds high-performance web applications, UI/UX designs, e-commerce stores, SEO strategies, and AI automations. Get a free quote today.`;
+      const keywords = CORE_BRAND_KEYWORDS;
 
       return {
         title,

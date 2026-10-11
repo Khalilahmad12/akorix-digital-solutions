@@ -18,7 +18,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
         <div className="relative aspect-16/10 w-full bg-stone-100 overflow-hidden border-b border-stone-100">
           <img
             src={project.image}
-            alt={project.title}
+            alt={`${project.title} - ${project.category} case study by AKorix Digital Solutions`}
             loading="lazy"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"

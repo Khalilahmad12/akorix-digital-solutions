@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Linkedin, Mail, User } from 'lucide-react';
+import { Users, Linkedin, Facebook, User } from 'lucide-react';
 import { TEAM_DATA } from '../../data';
 
 interface TeamSectionProps {
@@ -47,8 +47,8 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenContact }) => {
                 className="group relative rounded-xl bg-white border border-stone-200 shadow-xs hover:shadow-md hover:border-amber-400/80 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
               >
                 <div>
-                  {/* Image Container */}
-                  <div className="relative aspect-4/3 w-full bg-stone-100 overflow-hidden border-b border-stone-100">
+                  {/* Image Container (+15px height -> 255px) */}
+                  <div className="relative h-[255px] w-full bg-stone-100 overflow-hidden border-b border-stone-100">
                     {!hasImgError ? (
                       <img
                         src={member.avatar}
@@ -68,7 +68,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenContact }) => {
                     {/* Social/Profile Icons */}
                     <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
                       <a
-                        href="https://www.linkedin.com/company/akorix-digital-solutions"
+                        href={member.linkedin || "https://www.linkedin.com/company/akorix-digital"}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${member.name} on LinkedIn`}
@@ -76,26 +76,39 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onOpenContact }) => {
                       >
                         <Linkedin className="w-3.5 h-3.5" />
                       </a>
-                      {onOpenContact && (
-                        <button
-                          type="button"
-                          onClick={() => onOpenContact(`Hi, I'd like to connect with ${member.name} regarding a project.`)}
-                          aria-label={`Contact ${member.name}`}
-                          className="w-7 h-7 rounded-lg bg-white/90 hover:bg-white text-stone-700 hover:text-amber-700 shadow-xs flex items-center justify-center transition-colors cursor-pointer"
-                        >
-                          <Mail className="w-3.5 h-3.5" />
-                        </button>
-                      )}
+                      <a
+                        href={member.facebook || "https://www.facebook.com/share/1D2aL18vHY/"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${member.name} on Facebook`}
+                        className="w-7 h-7 rounded-lg bg-white/90 hover:bg-white text-stone-700 hover:text-amber-700 shadow-xs flex items-center justify-center transition-colors"
+                      >
+                        <Facebook className="w-3.5 h-3.5" />
+                      </a>
                     </div>
                   </div>
 
-                  {/* Member Name and Specialty */}
-                  <div className="p-4 sm:p-5 space-y-1">
-                    <h3 className="text-base font-bold text-stone-950 group-hover:text-amber-900 transition-colors">
-                      {member.name}
-                    </h3>
-                    <p className="text-xs font-semibold text-amber-700">
-                      {member.role}
+                  {/* Member Name, Specialty and 3-line Description */}
+                  <div className="p-4 sm:p-5 space-y-2">
+                    <div>
+                      <h3 className="text-base font-bold text-stone-950 group-hover:text-amber-900 transition-colors">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs font-semibold text-amber-700">
+                        {member.role}
+                      </p>
+                    </div>
+
+                    <p 
+                      className="text-xs text-stone-600 font-normal leading-relaxed line-clamp-3"
+                      style={{
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {member.bio}
                     </p>
                   </div>
                 </div>
