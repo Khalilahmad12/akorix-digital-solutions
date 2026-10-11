@@ -1,4 +1,14 @@
 import { FreelancerTalent } from '../types';
+import khalilAhmad from "../assets/images/khalilahmad.jpg";
+import ayesha from "../assets/images/ayesha.png";
+import sadafAmeer from "../assets/images/sadafAmeer.jpg";
+import maryamNawaz from "../assets/images/maryamNawaz.jpg";
+import shumaila from "../assets/images/shumaila.jpg";
+import aliza from "../assets/images/aliza.jpg";
+import mustafa from "../assets/images/mustafa.jpg";
+import sheraz from "../assets/images/sheraz.png";
+import nazma from "../assets/images/nazam.jpg";
+
 
 export const TEAM_DATA: FreelancerTalent[] = [
   {
@@ -6,7 +16,7 @@ export const TEAM_DATA: FreelancerTalent[] = [
     name: 'Khalil Ahmad',
     role: 'Founder & Business Growth Strategist',
     category: 'web',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: khalilAhmad,
     rating: 5.0,
     reviewCount: 38,
     completedProjects: 45,
@@ -22,9 +32,9 @@ export const TEAM_DATA: FreelancerTalent[] = [
   {
     id: 'des-1',
     name: 'Ayesha Aslam',
-    role: 'CEO & Lead Web Developer',
+    role: 'CEO & Full Stack Web Developer',
     category: 'web',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: ayesha,
     rating: 4.9,
     reviewCount: 42,
     completedProjects: 52,
@@ -42,7 +52,7 @@ export const TEAM_DATA: FreelancerTalent[] = [
     name: 'Maryam Nawaz',
     role: 'Business Development Specialist',
     category: 'ai',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: maryamNawaz,
     rating: 5.0,
     reviewCount: 29,
     completedProjects: 31,
@@ -60,7 +70,7 @@ export const TEAM_DATA: FreelancerTalent[] = [
     name: 'Shumaila',
     role: 'Expert WordPress Developer',
     category: 'web',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: shumaila,
     rating: 4.9,
     reviewCount: 34,
     completedProjects: 40,
@@ -76,9 +86,9 @@ export const TEAM_DATA: FreelancerTalent[] = [
   {
     id: 'cloud-1',
     name: 'Sadaf Ameer',
-    role: 'Expert Web Developer',
+    role: 'Lead Web Developer Team',
     category: 'web',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: sadafAmeer,
     rating: 5.0,
     reviewCount: 24,
     completedProjects: 28,
@@ -96,7 +106,7 @@ export const TEAM_DATA: FreelancerTalent[] = [
     name: 'Sheraz Ali',
     role: 'Lead Generation Specialist',
     category: 'marketing',
-    avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: sheraz,
     rating: 4.9,
     reviewCount: 36,
     completedProjects: 48,
@@ -112,9 +122,9 @@ export const TEAM_DATA: FreelancerTalent[] = [
   {
     id: 'ecom-1',
     name: 'Aliza Shah',
-    role: 'Expert Web Developer',
+    role: 'Full Stack Web Developer',
     category: 'web',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: aliza,
     rating: 5.0,
     reviewCount: 31,
     completedProjects: 39,
@@ -132,7 +142,7 @@ export const TEAM_DATA: FreelancerTalent[] = [
     name: 'Nazma',
     role: 'WordPress Developer & Graphic Designer',
     category: 'design',
-    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: nazma,
     rating: 4.9,
     reviewCount: 40,
     completedProjects: 44,
@@ -149,7 +159,7 @@ export const TEAM_DATA: FreelancerTalent[] = [
     name: 'Mustafa Aslam',
     role: 'SEO & Digital Marketing Specialist',
     category: 'marketing',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80',
+    avatar: mustafa,
     rating: 5.0,
     reviewCount: 27,
     completedProjects: 35,
